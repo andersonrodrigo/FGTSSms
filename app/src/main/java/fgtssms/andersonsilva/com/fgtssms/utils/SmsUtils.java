@@ -97,7 +97,13 @@ public class SmsUtils {
                     objSms.setMsg(c.getString(c.getColumnIndexOrThrow("body")));
 
                     if (objSms.getMsg() != null) {
+                        CAIXA informa: Juros e Atualizacao Monetaria de R$ 21,34, conta FGTS 00000033608, saldo atual R$ 6.243,64. DUVIDAS: 0800-726-0207
 
+
+                        CAIXA informa: Deposito R$ 544,34, conta FGTS 00000033608, competencia  01/2017. DUVIDAS: 0800-726-0207
+                        Enviado do meu dispositivo Samsung
+
+                                
                         if (objSms.getMsg().indexOf("Te Ligou:") > -1) {
                             try {
                                 String data = c.getString(c.getColumnIndexOrThrow("date"));
