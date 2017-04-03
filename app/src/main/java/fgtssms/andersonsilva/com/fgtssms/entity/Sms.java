@@ -2,6 +2,8 @@ package fgtssms.andersonsilva.com.fgtssms.entity;
 
 import android.graphics.Bitmap;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public class Sms {
@@ -23,6 +25,22 @@ public class Sms {
     private String valorReal;
     private String finalCartao;
     private String banco;
+
+    private String valorDeposito;
+    private String valorAtualizacaoMonetaria;
+    private String valorAtual;
+    private String numeroContaFgts;
+    private String nomeConta;
+    private String numeroCaixa;
+    private String valorPrevisao;
+    private String competenciaCaixa;
+    private Date dataCompetenciaCaixa;
+    private List<Sms> listaMensagensConta;
+
+    private BigDecimal vlrPrevisao;
+    private BigDecimal vlrDeposito;
+    private BigDecimal vlrAtualizacaoMonetaria;
+    private BigDecimal vlrAtual;
 
     private Bitmap imagemContato;
 
@@ -72,6 +90,54 @@ public class Sms {
         _folderName = folderName;
     }
 
+
+    public BigDecimal getVlrAtual() {
+        return vlrAtual;
+    }
+
+    public void setVlrAtual(BigDecimal vlrAtual) {
+        this.vlrAtual = vlrAtual;
+    }
+
+    public BigDecimal getVlrAtualizacaoMonetaria() {
+        return vlrAtualizacaoMonetaria;
+    }
+
+    public void setVlrAtualizacaoMonetaria(BigDecimal vlrAtualizacaoMonetaria) {
+        this.vlrAtualizacaoMonetaria = vlrAtualizacaoMonetaria;
+    }
+
+    public BigDecimal getVlrDeposito() {
+        return vlrDeposito;
+    }
+
+    public void setVlrDeposito(BigDecimal vlrDeposito) {
+        this.vlrDeposito = vlrDeposito;
+    }
+
+    public String getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(String valorAtual) {
+        this.valorAtual = valorAtual;
+    }
+
+    public String getValorAtualizacaoMonetaria() {
+        return valorAtualizacaoMonetaria;
+    }
+
+    public void setValorAtualizacaoMonetaria(String valorAtualizacaoMonetaria) {
+        this.valorAtualizacaoMonetaria = valorAtualizacaoMonetaria;
+    }
+
+    public String getValorDeposito() {
+        return valorDeposito;
+    }
+
+    public void setValorDeposito(String valorDeposito) {
+        this.valorDeposito = valorDeposito;
+    }
 
     /** BRADESCO CARTOES:
      * COMPRA APROVADA NO CARTAO FINAL 9900
@@ -189,5 +255,69 @@ public class Sms {
 
     public void setImagemContato(Bitmap imagemContato) {
         this.imagemContato = imagemContato;
+    }
+
+    public String getNumeroContaFgts() {
+        return numeroContaFgts;
+    }
+
+    public void setNumeroContaFgts(String numeroContaFgts) {
+        this.numeroContaFgts = numeroContaFgts;
+    }
+
+    public String getNomeConta() {
+        return nomeConta;
+    }
+
+    public void setNomeConta(String nomeConta) {
+        this.nomeConta = nomeConta;
+    }
+
+    public String getNumeroCaixa() {
+        return numeroCaixa;
+    }
+
+    public void setNumeroCaixa(String numeroCaixa) {
+        this.numeroCaixa = numeroCaixa;
+    }
+
+    public String getValorPrevisao() {
+        return valorPrevisao;
+    }
+
+    public void setValorPrevisao(String valorPrevisao) {
+        this.valorPrevisao = valorPrevisao;
+    }
+
+    public BigDecimal getVlrPrevisao() {
+        return vlrPrevisao;
+    }
+
+    public void setVlrPrevisao(BigDecimal vlrPrevisao) {
+        this.vlrPrevisao = vlrPrevisao;
+    }
+
+    public String getCompetenciaCaixa() {
+        return competenciaCaixa;
+    }
+
+    public void setCompetenciaCaixa(String competenciaCaixa) {
+        this.competenciaCaixa = competenciaCaixa;
+    }
+
+    public Date getDataCompetenciaCaixa() {
+        return dataCompetenciaCaixa;
+    }
+
+    public void setDataCompetenciaCaixa(Date dataCompetenciaCaixa) {
+        this.dataCompetenciaCaixa = dataCompetenciaCaixa;
+    }
+
+    public List<Sms> getListaMensagensConta() {
+        return listaMensagensConta;
+    }
+
+    public void setListaMensagensConta(List<Sms> listaMensagensConta) {
+        this.listaMensagensConta = listaMensagensConta;
     }
 }

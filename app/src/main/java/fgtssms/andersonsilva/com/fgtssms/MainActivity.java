@@ -406,10 +406,10 @@ public class MainActivity extends AppCompatActivity
         List<Sms> retorno = new ArrayList<Sms>();
         for (Sms sms:listaSms){
             Sms s1 = recuperaSmsExistente(retorno,sms);
-            if (s1.getOcorrencias()==null){
-                s1.setOcorrencias(new ArrayList<String>());
+            if (s1.getListaMensagensConta()==null){
+                s1.setListaMensagensConta(new ArrayList<Sms>());
             }
-            s1.getOcorrencias().add(sms.getDataLigacao()+" "+sms.getHoraLigacao());
+            s1.getListaMensagensConta().add(sms);
             //  retorno.add(s1);
         }
         return retorno;
@@ -424,16 +424,13 @@ public class MainActivity extends AppCompatActivity
      */
     private Sms recuperaSmsExistente(List<Sms> listaRetorno, Sms sms){
         for(Sms s1:listaRetorno){
-            if (s1.getAddress().equals(sms.getNumeroTeLigou())){
+            if (s1.getNumeroContaFgts().equals(sms.getNumeroContaFgts())){
                 return s1;
             }
         }
-        Sms s1 = new Sms();
-        s1.setNumeroTeLigou("   "+sms.getNomeContato() + " ("+sms.getNumeroTeLigou()+")");
-        s1.setAddress(sms.getNumeroTeLigou());
-        s1.setImagemContato(sms.getImagemContato());
-        listaRetorno.add(s1);
-        return s1;
+
+        listaRetorno.add(sms);
+        return sms;
     }
 
 }

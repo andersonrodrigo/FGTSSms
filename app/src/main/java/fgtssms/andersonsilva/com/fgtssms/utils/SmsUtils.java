@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,51 +98,21 @@ public class SmsUtils {
                     objSms.setMsg(c.getString(c.getColumnIndexOrThrow("body")));
 
                     if (objSms.getMsg() != null) {
-                        CAIXA informa: Juros e Atualizacao Monetaria de R$ 21,34, conta FGTS 00000033608, saldo atual R$ 6.243,64. DUVIDAS: 0800-726-0207
 
-
-                        CAIXA informa: Deposito R$ 544,34, conta FGTS 00000033608, competencia  01/2017. DUVIDAS: 0800-726-0207
-                        Enviado do meu dispositivo Samsung
-
-                                
-                        if (objSms.getMsg().indexOf("Te Ligou:") > -1) {
+                        if (objSms.getMsg().indexOf("CAIXA informa: ") > -1) {
                             try {
                                 String data = c.getString(c.getColumnIndexOrThrow("date"));
-                                if (objSms.getMsg().indexOf("<")>-1) {
-                                    preencheObjetoSms(cr, data, objSms);
-                                    listaSms.add(objSms);
-                                }
-                            } catch (Exception e) {
-
-                            }
-//TIM Avisa: <04131983798686>
-                        }else  if (objSms.getMsg().indexOf("TIM Avisa:") > -1) {
-                            try {
-                                objSms.setNumeroTeLigou(objSms.getMsg().substring(objSms.getMsg().indexOf("<")+1,objSms.getMsg().indexOf(">")));
-                                objSms.setDataLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf("dia")+4,objSms.getMsg().indexOf("dia")+9));
-                                objSms.setHoraLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf("as")+3,objSms.getMsg().indexOf("as")+8));
-                                Calendar d = Calendar.getInstance();
-                                d.setTimeInMillis(Long.valueOf(c.getString(c.getColumnIndexOrThrow("date"))));
-                                String ano = (new SimpleDateFormat("yyyy").format(d.getTime()));
-                                objSms.setDataLigacao(objSms.getDataLigacao()+"/"+ano);
-                                String numeroBase = objSms.getNumeroTeLigou();
-                                if (numeroBase.length() == 14){
-                                    numeroBase = numeroBase.substring(6,14);
-                                }
-                                recuperaNomeContato(cr,numeroBase,objSms);
+                                preencheObjetoSms(cr, data, objSms);
                                 listaSms.add(objSms);
+
                             } catch (Exception e) {
 
                             }
-
                         }
-
 
                     }
                     c.moveToNext();
-
                 }
-
             }
             c.close();
             return listaSms;
@@ -154,128 +125,37 @@ public class SmsUtils {
      *
      * @param cr
      * @param objSms
-     *  TIM Avisa: <04131983798686> te ligou, dia 02/03 as 14:44 powered by Truecaller
+     *
      */
     public static void preencheObjetoSms(ContentResolver cr,String data,Sms objSms){
-        if (objSms.getMsg().indexOf("TIM Avisa:")>-1){
-            objSms.setNumeroTeLigou(objSms.getMsg().substring(objSms.getMsg().indexOf("<")+1,objSms.getMsg().indexOf(">")));
-            objSms.setDataLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf("dia ")+4,objSms.getMsg().indexOf(" as ")));
-            objSms.setHoraLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf(" as ")+4,objSms.getMsg().indexOf(" as ")+5));
-            String ano = (new SimpleDateFormat("yyyy").format(new Date()));
-            objSms.setDataLigacao(objSms.getDataLigacao()+"/"+ano);
-            String numeroBase = objSms.getNumeroTeLigou();
-            if (numeroBase.length() == 14){
-                numeroBase = numeroBase.substring(6,14);
-            }
-            recuperaNomeContato(cr,numeroBase,objSms);
-        }else{
-            objSms.setNumeroTeLigou(objSms.getMsg().substring(objSms.getMsg().indexOf("<")+1,objSms.getMsg().indexOf(">")));
-            objSms.setDataLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf(">")+2,objSms.getMsg().indexOf(">")+7));
-            objSms.setHoraLigacao(objSms.getMsg().substring(objSms.getMsg().indexOf(">")+7,objSms.getMsg().indexOf(">")+13));
-            String ano = (new SimpleDateFormat("yyyy").format(new Date()));
-            objSms.setDataLigacao(objSms.getDataLigacao()+"/"+ano);
-            String numeroBase = objSms.getNumeroTeLigou();
-            if (numeroBase.length() == 14){
-                numeroBase = numeroBase.substring(6,14);
-            }
-            recuperaNomeContato(cr,numeroBase,objSms);
+/**        CAIXA informa: Juros e Atualizacao Monetaria de R$ 21,34, conta FGTS 00000033608, saldo atual R$ 6.243,64. DUVIDAS: 0800-726-0207
+        Enviado do meu dispositivo Samsung*/
+        if (objSms.getMsg().indexOf("CAIXA informa: Juros e Atualizacao Monetaria")>-1){
+            objSms.setValorAtual(objSms.getMsg().substring(objSms.getMsg().indexOf("saldo atual R$ ")+15,objSms.getMsg().indexOf(". DUVIDAS:")));
+            objSms.setValorAtualizacaoMonetaria(objSms.getMsg().substring(objSms.getMsg().indexOf("Monetaria de R$ ")+16,objSms.getMsg().indexOf(", conta FGTS")));
+            objSms.setValorDeposito("0");
+            objSms.setNumeroContaFgts(objSms.getMsg().substring(objSms.getMsg().indexOf("conta FGTS ")+11,objSms.getMsg().indexOf(", saldo atual")));
+            objSms.setNumeroCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("DUVIDAS: ")+9,objSms.getMsg().indexOf("DUVIDAS: ")+9+13));
+            objSms.setValorPrevisao("");
+            objSms.setVlrAtual(new BigDecimal(objSms.getValorAtual().replace(".","").replace(",",".")));
+            objSms.setVlrAtualizacaoMonetaria(new BigDecimal(objSms.getValorAtualizacaoMonetaria().replace(".","").replace(",",".")));
+            objSms.setCompetenciaCaixa("");
+        }else    if (objSms.getMsg().indexOf("CAIXA informa: Deposito ")>-1){
+/**CAIXA informa: Deposito R$ 544,34, conta FGTS 00000033608, competencia  01/2017. DUVIDAS: 0800-726-0207**/
+            objSms.setValorAtual("");
+            objSms.setValorAtualizacaoMonetaria("");
+            objSms.setValorDeposito(objSms.getMsg().substring(objSms.getMsg().indexOf("Deposito R$ ")+12,objSms.getMsg().indexOf(", conta")));
+            objSms.setNumeroContaFgts(objSms.getMsg().substring(objSms.getMsg().indexOf("conta FGTS ")+11,objSms.getMsg().indexOf(", competencia")));
+            objSms.setNumeroCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("DUVIDAS: ")+9,objSms.getMsg().indexOf("DUVIDAS: ")+9+13));
+            objSms.setValorPrevisao("");
+            objSms.setCompetenciaCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("competencia  ")+13,objSms.getMsg().indexOf(". DUVIDAS")));
+            try{ objSms.setDataCompetenciaCaixa(new SimpleDateFormat("dd/MM/yyyy").parse("01"+objSms.getCompetenciaCaixa()));}catch (Exception e){}
+            objSms.setVlrAtual(new BigDecimal(0));
+            objSms.setVlrAtualizacaoMonetaria(new BigDecimal(0));
         }
 
     }
 
-    /**
-     *
-     * @param cr
-     * @param data
-     * @param objSms
-     */
-    public static void preencheObjetoSmsTorpedoCobrar(ContentResolver cr,String data,Sms objSms){
-        if (objSms.getMsg().indexOf("te enviou um")>-1){
-            objSms.setNumeroTeLigou(objSms.getMsg().substring(0,objSms.getMsg().indexOf("te enviou")));
-            objSms.setDataLigacao(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-            objSms.setHoraLigacao(new SimpleDateFormat("HH:mm").format(new Date()));
-        }else if (objSms.getMsg().indexOf("Vc tem ")>-1){
-            objSms.setNumeroTeLigou(objSms.getMsg().substring(objSms.getMsg().indexOf("Cobrar de ")+10,objSms.getMsg().indexOf(" pendente")));
-            objSms.setDataLigacao(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-            objSms.setHoraLigacao(new SimpleDateFormat("HH:mm").format(new Date()));
-        }else if (objSms.getMsg().indexOf("Para ver o restante do Torpedo")>-1){
-            objSms.setNumeroTeLigou(objSms.getMsg().substring(objSms.getMsg().indexOf("o numero ")+9,objSms.getMsg().indexOf(" te enviou responda")));
-            objSms.setDataLigacao(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-            objSms.setHoraLigacao(new SimpleDateFormat("HH:mm").format(new Date()));
-        }
-        String numeroBase = objSms.getNumeroTeLigou();
-        if (numeroBase!=null && numeroBase.length() == 14){
-            numeroBase = numeroBase.substring(6,14);
-            recuperaNomeContato(cr,numeroBase,objSms);
-        }
-
-    }
-
-
-
-    /**
-     *
-     * @param numero
-     * @return
-     */
-    private static void recuperaNomeContato(ContentResolver cr,String numero,Sms objSms){
-        try {
-            String[] PROJECTION = new String[] { ContactsContract.Contacts._ID,
-                    ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.PHOTO_URI };
-
-            Cursor c = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, null, null, null);
-            if (c.moveToFirst()) {
-                String clsPhonename = null;
-                String clsphoneNo = null;
-                long contactId ;
-                do {
-                    clsPhonename = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    contactId    = c.getLong(c.getColumnIndex(ContactsContract.Contacts._ID));
-                    clsphoneNo = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    String numeroBase = clsphoneNo.replace("-","");
-                    if (numeroBase.indexOf(numero) > -1) {
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media .getBitmap(cr, Uri.parse(c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))));
-                            objSms.setImagemContato(bitmap);
-                        } catch (Exception e) {
-                            objSms.setImagemContato(null);
-                        }
-                        objSms.setNomeContato(clsPhonename);
-                        break;
-                    }
-                } while (c.moveToNext());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (objSms.getNomeContato() == null || objSms.getNomeContato().equals(""))
-            recuperaNomeContatoSIM(cr,numero,objSms);
-
-    }
-
-private static void recuperaNomeContatoSIM(ContentResolver cr,String numero, Sms objSms){
-    try {
-        String clsSimPhonename = null;
-        String clsSimphoneNo = null;
-
-        Uri simUri = Uri.parse("content://icc/adn");
-        Cursor cursorSim = cr.query(simUri, null,
-                null, null, null);
-        while (cursorSim.moveToNext()) {
-            clsSimPhonename = cursorSim.getString(cursorSim.getColumnIndex("name"));
-            clsSimphoneNo = cursorSim.getString(cursorSim.getColumnIndex("number"));
-            String numeroBase = clsSimphoneNo.replace("-","");
-            if (numeroBase.indexOf(numero)>-1) {
-                objSms.setNomeContato(clsSimPhonename);
-                break;
-            }
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    objSms.setNomeContato("Não encontrado.");
-}
 
 
 
