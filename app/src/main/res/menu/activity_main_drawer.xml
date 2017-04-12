@@ -7,10 +7,10 @@
             android:icon="@drawable/ic_account_balance_black_24dp"
             android:title="Inicio" />
 
-        <!--item
-            android:id="@+id/nav_slideshow"
+        <item
+            android:id="@+id/nav_nomear_contas"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Graficos" /-->
+            android:title="Nomear Contas" />
 
     </group>
 

@@ -102,8 +102,8 @@ public class SmsUtils {
                         if (objSms.getMsg().indexOf("CAIXA informa: ") > -1) {
                             try {
                                 String data = c.getString(c.getColumnIndexOrThrow("date"));
-                                preencheObjetoSms(cr, data, objSms);
-                                listaSms.add(objSms);
+                                preencheObjetoSms(cr, data, objSms,listaSms);
+
 
                             } catch (Exception e) {
 
@@ -127,7 +127,7 @@ public class SmsUtils {
      * @param objSms
      *
      */
-    public static void preencheObjetoSms(ContentResolver cr,String data,Sms objSms){
+    public static void preencheObjetoSms(ContentResolver cr,String data,Sms objSms,ArrayList<Sms>  listaSms){
 /**        CAIXA informa: Juros e Atualizacao Monetaria de R$ 21,34, conta FGTS 00000033608, saldo atual R$ 6.243,64. DUVIDAS: 0800-726-0207
         Enviado do meu dispositivo Samsung*/
         if (objSms.getMsg().indexOf("CAIXA informa: Juros e Atualizacao Monetaria")>-1){
@@ -140,18 +140,42 @@ public class SmsUtils {
             objSms.setVlrAtual(new BigDecimal(objSms.getValorAtual().replace(".","").replace(",",".")));
             objSms.setVlrAtualizacaoMonetaria(new BigDecimal(objSms.getValorAtualizacaoMonetaria().replace(".","").replace(",",".")));
             objSms.setCompetenciaCaixa("");
+
+            try{
+                Date d = new Date(new Long(data));
+                objSms.setDataCompetenciaCaixa(d);
+            }catch (Exception e){}
+            objSms.setTipoMovimentacao("Atualização");
+            listaSms.add(objSms);
         }else    if (objSms.getMsg().indexOf("CAIXA informa: Deposito ")>-1){
 /**CAIXA informa: Deposito R$ 544,34, conta FGTS 00000033608, competencia  01/2017. DUVIDAS: 0800-726-0207**/
             objSms.setValorAtual("");
             objSms.setValorAtualizacaoMonetaria("");
-            objSms.setValorDeposito(objSms.getMsg().substring(objSms.getMsg().indexOf("Deposito R$ ")+12,objSms.getMsg().indexOf(", conta")));
+            objSms.setValorDeposito(objSms.getMsg().substring(objSms.getMsg().indexOf("Deposito R")+12,objSms.getMsg().indexOf(", conta")));
             objSms.setNumeroContaFgts(objSms.getMsg().substring(objSms.getMsg().indexOf("conta FGTS ")+11,objSms.getMsg().indexOf(", competencia")));
             objSms.setNumeroCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("DUVIDAS: ")+9,objSms.getMsg().indexOf("DUVIDAS: ")+9+13));
             objSms.setValorPrevisao("");
             objSms.setCompetenciaCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("competencia  ")+13,objSms.getMsg().indexOf(". DUVIDAS")));
-            try{ objSms.setDataCompetenciaCaixa(new SimpleDateFormat("dd/MM/yyyy").parse("01"+objSms.getCompetenciaCaixa()));}catch (Exception e){}
+            try{ objSms.setDataCompetenciaCaixa(new SimpleDateFormat("dd/MM/yyyy").parse("01/"+objSms.getCompetenciaCaixa()));}catch (Exception e){}
             objSms.setVlrAtual(new BigDecimal(0));
             objSms.setVlrAtualizacaoMonetaria(new BigDecimal(0));
+            objSms.setTipoMovimentacao("Deposito");
+            listaSms.add(objSms);
+       //CAIXA informa: Liberacao do valor para saque R$ 4.714,88 em  28/04/2016, conta FGTS 00000000496. DUVIDAS: 0800-726-0207
+        }else if (objSms.getMsg().indexOf("CAIXA informa: Liberacao do valor")>-1){
+            objSms.setValorAtual("-"+objSms.getMsg().substring(objSms.getMsg().indexOf("saque R$ ")+9,objSms.getMsg().indexOf(" em ")));
+            objSms.setValorAtualizacaoMonetaria("");
+            objSms.setValorDeposito("");
+            objSms.setNumeroContaFgts(objSms.getMsg().substring(objSms.getMsg().indexOf("conta FGTS ")+11,objSms.getMsg().indexOf(". DUVIDAS:")));
+            objSms.setNumeroCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf("DUVIDAS: ")+9,objSms.getMsg().indexOf("DUVIDAS: ")+9+13));
+            objSms.setValorPrevisao("");
+            objSms.setCompetenciaCaixa(objSms.getMsg().substring(objSms.getMsg().indexOf(" em ")+4,objSms.getMsg().indexOf(" em ")+14));
+            try{ objSms.setDataCompetenciaCaixa(new SimpleDateFormat("dd/MM/yyyy").parse(objSms.getCompetenciaCaixa()));}catch (Exception e){}
+            objSms.setVlrAtual(new BigDecimal(objSms.getValorAtual().replace(".","").replace(",",".")));
+            objSms.setVlrAtual(objSms.getVlrAtual().multiply(new BigDecimal(-1)));
+            objSms.setVlrAtualizacaoMonetaria(new BigDecimal(0));
+            objSms.setTipoMovimentacao("Saque");
+            listaSms.add(objSms);
         }
 
     }

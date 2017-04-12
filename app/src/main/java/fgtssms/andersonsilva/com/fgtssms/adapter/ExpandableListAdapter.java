@@ -99,8 +99,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(sms.getNumeroTeLigou());
-        try {
+        lblListHeader.setText(sms.getNumeroContaFgts());
+        TextView lblListHeaderContador = (TextView) convertView
+                .findViewById(R.id.lblListHeaderContador);
+        lblListHeaderContador.setTypeface(null, Typeface.BOLD);
+        lblListHeaderContador.setText((groupPosition+1)+" - ");
+       /** try {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.imagemContato);
             if (sms.getImagemContato() != null) {
                 Bitmap circleBitmap = Bitmap.createBitmap(sms.getImagemContato().getWidth(), sms.getImagemContato().getHeight(), Bitmap.Config.ARGB_8888);
@@ -115,7 +119,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }catch (Exception e ){
 
-        }
+        }*/
         return convertView;
     }
 

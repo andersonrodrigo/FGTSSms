@@ -32,7 +32,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -227,8 +229,8 @@ public class MainActivity extends AppCompatActivity
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle("Te ligaram..")
-                        .setContentText("Me liga ai...");
+                        .setContentTitle("Alterações no seu FGTS")
+                        .setContentText("Dim Dim");
 
         if (sms.getImagemContato()!=null){
             Bitmap circleBitmap = Bitmap.createBitmap(sms.getImagemContato().getWidth(), sms.getImagemContato().getHeight(), Bitmap.Config.ARGB_8888);
@@ -331,6 +333,8 @@ public class MainActivity extends AppCompatActivity
             });
             adb.setNegativeButton("Continuar", null);
             adb.show();
+        }else if (id == R.id.nav_nomear_contas){
+            
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -410,10 +414,32 @@ public class MainActivity extends AppCompatActivity
                 s1.setListaMensagensConta(new ArrayList<Sms>());
             }
             s1.getListaMensagensConta().add(sms);
-            //  retorno.add(s1);
+             // retorno.add(s1);
+        }
+        for (Sms sms:retorno) {
+            if (sms.getListaMensagensConta()!=null
+                    && !sms.getListaMensagensConta().isEmpty()){
+                sms.setOcorrencias(new ArrayList<String>());
+                for (Sms item:sms.getListaMensagensConta()){
+                    if (item.getTipoMovimentacao().equals("Saque")){
+                        sms.getOcorrencias().add("Saque:       "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorAtual());
+                    }else if (item.getTipoMovimentacao().equals("Atualização")){
+                        sms.getOcorrencias().add("Atualização: "+imprimeData(item.getDataCompetenciaCaixa())  + "   -   "+item.getValorAtualizacaoMonetaria() + " Saldo Atual:"+item.getValorAtual());
+                    }else if (item.getTipoMovimentacao().equals("Deposito")){
+                        sms.getOcorrencias().add("Deposito:    "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorDeposito());
+                    }
+
+                }
+            }
         }
         return retorno;
 
+    }
+    private String imprimeData(Date dataCompetenciaCaixa){
+        if (dataCompetenciaCaixa!=null){
+            return new SimpleDateFormat("dd/MM/yyyy").format(dataCompetenciaCaixa);
+        }
+        return "";
     }
 
     /**
@@ -424,7 +450,7 @@ public class MainActivity extends AppCompatActivity
      */
     private Sms recuperaSmsExistente(List<Sms> listaRetorno, Sms sms){
         for(Sms s1:listaRetorno){
-            if (s1.getNumeroContaFgts().equals(sms.getNumeroContaFgts())){
+            if (s1.getNumeroContaFgts()!=null && sms.getNumeroContaFgts()!=null && s1.getNumeroContaFgts().equals(sms.getNumeroContaFgts())){
                 return s1;
             }
         }

@@ -14,7 +14,7 @@ public class Sms {
     private String _time;
     private String _folderName;
 
-
+    private String tipoMovimentacao;
     private String numeroTeLigou;
     private String dataLigacao;
     private String horaLigacao;
@@ -319,5 +319,13 @@ public class Sms {
 
     public void setListaMensagensConta(List<Sms> listaMensagensConta) {
         this.listaMensagensConta = listaMensagensConta;
+    }
+
+    public String getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    public void setTipoMovimentacao(String tipoMovimentacao) {
+        this.tipoMovimentacao = tipoMovimentacao;
     }
 }
