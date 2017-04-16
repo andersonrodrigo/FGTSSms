@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -32,6 +33,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +89,7 @@ import java.util.List;
 
 import fgtssms.andersonsilva.com.fgtssms.adapter.ExpandableListAdapter;
 import fgtssms.andersonsilva.com.fgtssms.entity.Sms;
+import fgtssms.andersonsilva.com.fgtssms.utils.DBAdapter;
 import fgtssms.andersonsilva.com.fgtssms.utils.SmsUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -334,7 +341,8 @@ public class MainActivity extends AppCompatActivity
             adb.setNegativeButton("Continuar", null);
             adb.show();
         }else if (id == R.id.nav_nomear_contas){
-            
+            Intent i = new Intent(getApplicationContext(), NomearActivity.class);
+            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -395,69 +403,15 @@ public class MainActivity extends AppCompatActivity
     private void prepareListData(List<Sms> listaSms) {
         listDataHeader = new ArrayList<Sms>();
         listDataChild = new HashMap<Sms, List<String>>();
-        listaSms = agrupaSms(listaSms);
+        listaSms = SmsUtils.agrupaSms(listaSms,getBaseContext(),getPackageName(),this);
         for (Sms sms: listaSms){
             listDataHeader.add(sms);
             listDataChild.put(sms, sms.getOcorrencias()); // Header, Child data
         }
     }
 
-    /**
-     *
-     * @param listaSms
-     */
-    private List<Sms> agrupaSms(List<Sms> listaSms) {
-        List<Sms> retorno = new ArrayList<Sms>();
-        for (Sms sms:listaSms){
-            Sms s1 = recuperaSmsExistente(retorno,sms);
-            if (s1.getListaMensagensConta()==null){
-                s1.setListaMensagensConta(new ArrayList<Sms>());
-            }
-            s1.getListaMensagensConta().add(sms);
-             // retorno.add(s1);
-        }
-        for (Sms sms:retorno) {
-            if (sms.getListaMensagensConta()!=null
-                    && !sms.getListaMensagensConta().isEmpty()){
-                sms.setOcorrencias(new ArrayList<String>());
-                for (Sms item:sms.getListaMensagensConta()){
-                    if (item.getTipoMovimentacao().equals("Saque")){
-                        sms.getOcorrencias().add("Saque:       "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorAtual());
-                    }else if (item.getTipoMovimentacao().equals("Atualização")){
-                        sms.getOcorrencias().add("Atualização: "+imprimeData(item.getDataCompetenciaCaixa())  + "   -   "+item.getValorAtualizacaoMonetaria() + " Saldo Atual:"+item.getValorAtual());
-                    }else if (item.getTipoMovimentacao().equals("Deposito")){
-                        sms.getOcorrencias().add("Deposito:    "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorDeposito());
-                    }
 
-                }
-            }
-        }
-        return retorno;
 
-    }
-    private String imprimeData(Date dataCompetenciaCaixa){
-        if (dataCompetenciaCaixa!=null){
-            return new SimpleDateFormat("dd/MM/yyyy").format(dataCompetenciaCaixa);
-        }
-        return "";
-    }
-
-    /**
-     *
-     * @param listaRetorno
-     * @param sms
-     * @return
-     */
-    private Sms recuperaSmsExistente(List<Sms> listaRetorno, Sms sms){
-        for(Sms s1:listaRetorno){
-            if (s1.getNumeroContaFgts()!=null && sms.getNumeroContaFgts()!=null && s1.getNumeroContaFgts().equals(sms.getNumeroContaFgts())){
-                return s1;
-            }
-        }
-
-        listaRetorno.add(sms);
-        return sms;
-    }
 
 }
 

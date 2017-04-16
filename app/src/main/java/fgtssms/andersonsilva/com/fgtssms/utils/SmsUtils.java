@@ -1,6 +1,8 @@
 package fgtssms.andersonsilva.com.fgtssms.utils;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,6 +10,11 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -178,6 +185,116 @@ public class SmsUtils {
             listaSms.add(objSms);
         }
 
+    }
+
+    /**
+     *
+     * @param listaSms
+     */
+    public static ArrayList<Sms> agrupaSms(List<Sms> listaSms,Context context, String pacote,Activity activity) {
+
+
+
+        ArrayList<Sms> retorno = new ArrayList<Sms>();
+        for (Sms sms:listaSms){
+            Sms s1 = recuperaSmsExistente(retorno,sms);
+            if (s1.getListaMensagensConta()==null){
+                s1.setListaMensagensConta(new ArrayList<Sms>());
+            }
+            s1.getListaMensagensConta().add(sms);
+            // retorno.add(s1);
+        }
+        for (Sms sms:retorno) {
+            if (sms.getListaMensagensConta()!=null
+                    && !sms.getListaMensagensConta().isEmpty()){
+                sms.setOcorrencias(new ArrayList<String>());
+                for (Sms item:sms.getListaMensagensConta()){
+                    if (item.getTipoMovimentacao().equals("Saque")){
+                        sms.getOcorrencias().add("Saque:       "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorAtual());
+                    }else if (item.getTipoMovimentacao().equals("Atualização")){
+                        sms.getOcorrencias().add("Atualização: "+imprimeData(item.getDataCompetenciaCaixa())  + "   -   "+item.getValorAtualizacaoMonetaria() + " Saldo Atual:"+item.getValorAtual());
+                    }else if (item.getTipoMovimentacao().equals("Deposito")){
+                        sms.getOcorrencias().add("Deposito:    "+imprimeData(item.getDataCompetenciaCaixa()) + "   -   "+item.getValorDeposito());
+                    }
+
+                }
+            }
+        }
+        nomeiaContas(retorno,context,pacote,activity);
+        return retorno;
+
+    }
+    public static void nomeiaContas(List<Sms> lista,Context context,String pacote,Activity activity){
+        iniciaBanco(context,pacote);
+        DBAdapter db = new DBAdapter(activity);
+        db.open();
+
+        Cursor c = db.getAllContas();
+        if (c.moveToFirst()){
+            do{
+                String numero = c.getString(1);
+                String nome = c.getString(2);
+                for (Sms sms:lista){
+                    if (sms.getNumeroContaFgts().equals(numero)){
+                        sms.setNomeConta(nome);
+                        break;
+                    }
+                }
+
+            }while (c.moveToNext());
+        }
+        db.close();
+    }
+    private static void iniciaBanco(Context context,String pakage) {
+        try{
+            String destPath = "/data/data/"+pakage+"/databases/MyDB";
+            File f = new File(destPath);
+            if (!f.exists()){
+                CopyDB(context.getAssets().open("/databases/MyDB"),new FileOutputStream(destPath));
+            }
+        }catch (Exception e){
+
+        }
+
+    }
+    private static String imprimeData(Date dataCompetenciaCaixa){
+        if (dataCompetenciaCaixa!=null){
+            return new SimpleDateFormat("dd/MM/yyyy").format(dataCompetenciaCaixa);
+        }
+        return "";
+    }
+
+    /**
+     *
+     * @param listaRetorno
+     * @param sms
+     * @return
+     */
+    private static Sms recuperaSmsExistente(List<Sms> listaRetorno, Sms sms){
+        for(Sms s1:listaRetorno){
+            if (s1.getNumeroContaFgts()!=null && sms.getNumeroContaFgts()!=null && s1.getNumeroContaFgts().equals(sms.getNumeroContaFgts())){
+                return s1;
+            }
+        }
+
+        listaRetorno.add(sms);
+        return sms;
+    }
+
+    /**
+     *
+     * @param inputStream
+     * @param outputStream
+     * @throws IOException
+     */
+    public static void CopyDB (InputStream inputStream, OutputStream outputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer))>0){
+            outputStream.write(buffer,0,length);
+        }
+        inputStream.close();
+        outputStream.close();
     }
 
 
