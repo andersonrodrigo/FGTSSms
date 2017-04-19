@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.List;
+
+import fgtssms.andersonsilva.com.fgtssms.entity.Conta;
+
 public class DBAdapter {
     public static final String KEY_ROWID = "_id";
     public static final String KEY_NOME = "nome";
@@ -79,7 +83,7 @@ public class DBAdapter {
     }
     
     //---insert a contact into the database---
-    public long insertConta(String nome, String numeroConta, String senha){
+    public long insertConta(String nome, String numeroConta){
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NOME, nome);
         initialValues.put(KEY_NUMERO_CONTA, numeroConta);
@@ -87,7 +91,12 @@ public class DBAdapter {
     }
 
 
-
+public void salvarContas(List<Conta> contas){
+    db.delete(DATABASE_TABLE_CONTAS, null , null);
+    for (Conta conta:contas) {
+        insertConta(conta.getNome(),conta.getNumero());
+    }
+}
 
     //---deletes a particular contact---
     public boolean deleteConta(long rowId)

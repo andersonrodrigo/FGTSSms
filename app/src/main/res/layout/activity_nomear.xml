@@ -22,11 +22,19 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:id="@+id/btnSalvar"
 
+        android:layout_centerHorizontal="true"
+        />
     <ListView
         android:id="@+id/listContas"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_below="@+id/btnSalvar"
         >
     </ListView>
 

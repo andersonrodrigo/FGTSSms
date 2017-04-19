@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import fgtssms.andersonsilva.com.fgtssms.entity.Conta;
 import fgtssms.andersonsilva.com.fgtssms.entity.Sms;
 
 /**
@@ -257,6 +258,16 @@ public class SmsUtils {
         }
 
     }
+
+    public static void salvarContas(List<Conta> contas,Context context,String pacote,Activity activity) {
+        iniciaBanco(context, pacote);
+        DBAdapter db = new DBAdapter(activity);
+        db.open();
+        db.salvarContas(contas);
+        db.close();
+
+    }
+
     private static String imprimeData(Date dataCompetenciaCaixa){
         if (dataCompetenciaCaixa!=null){
             return new SimpleDateFormat("dd/MM/yyyy").format(dataCompetenciaCaixa);
