@@ -99,7 +99,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(sms.getNumeroContaFgts());
+        if (sms.getNomeConta()!=null && !sms.getNomeConta().equals("")){
+            lblListHeader.setText(sms.getNumeroContaFgts() + " - "+sms.getNomeConta());
+        }else{
+            lblListHeader.setText(sms.getNumeroContaFgts());
+        }
+
         TextView lblListHeaderContador = (TextView) convertView
                 .findViewById(R.id.lblListHeaderContador);
         lblListHeaderContador.setTypeface(null, Typeface.BOLD);

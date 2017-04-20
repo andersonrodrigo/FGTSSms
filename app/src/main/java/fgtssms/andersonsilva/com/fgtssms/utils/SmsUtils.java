@@ -233,8 +233,8 @@ public class SmsUtils {
         Cursor c = db.getAllContas();
         if (c.moveToFirst()){
             do{
-                String numero = c.getString(1);
-                String nome = c.getString(2);
+                String nome= c.getString(1);
+                String  numero = c.getString(2);
                 for (Sms sms:lista){
                     if (sms.getNumeroContaFgts().equals(numero)){
                         sms.setNomeConta(nome);

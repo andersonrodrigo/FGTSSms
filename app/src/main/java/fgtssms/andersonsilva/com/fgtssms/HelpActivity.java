@@ -35,9 +35,10 @@ public class HelpActivity extends AppCompatActivity {
         });
 
         TextView textView = (TextView) findViewById(R.id.textHelp);
-        String texto = "Esta aplicação Lê os SMS enviados pela sua operadora e organiza mostrando os dados dos contatos já existentes no seu telefone. \n" +
-                "Ela possui um receiver que no nomento que chega o SMS avisando que a pessoa te ligou ela dispara uma notificação para falicitar para você" +
-                "ligar de volta para a pessoa.";
+        String texto = "Esta aplicação Lê os SMS enviados pela Caixa Econômica Federal com as informações referentes ao Seu SMS. " +
+                "\nAs informações apresentadas neste aplicativo refletem as mensagens da sua caixa de entrada e organiza as informações.\n" +
+                "Qualquer divergência deve ser verificada diretamente com a Caixa Econômica Federal, sendo assim este Aplicativo não possui nenhuma responsabilidade com as informações apresentadas.\n" +
+                "Para solicitar a adesão ao serviço acesse a URL:http://www.caixa.gov.br/beneficios-trabalhador/fgts/FGTS-Alerta-SMS/Paginas/default.aspx?pk_campaign=adesaopf";
         textView.setText(texto);
     }
 
