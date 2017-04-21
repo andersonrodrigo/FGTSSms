@@ -9,8 +9,14 @@
 
         <item
             android:id="@+id/nav_nomear_contas"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Nomear Contas" />
+
+        <item
+            android:id="@+id/nav_extrato"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="Extrato" />
+
 
     </group>
 

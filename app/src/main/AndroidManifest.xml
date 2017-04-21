@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".HelpActivity" />
         <activity android:name=".SobreActivity" />
-        <activity android:name=".NomearActivity"></activity>
+        <activity android:name=".NomearActivity" />
+        <activity android:name=".ExtratoActivity"></activity>
     </application>
 
 </manifest>

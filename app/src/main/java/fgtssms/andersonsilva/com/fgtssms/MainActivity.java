@@ -343,6 +343,9 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_nomear_contas){
             Intent i = new Intent(getApplicationContext(), NomearActivity.class);
             startActivity(i);
+        }else if (id == R.id.nav_extrato){
+            Intent i = new Intent(getApplicationContext(), ExtratoActivity.class);
+            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
