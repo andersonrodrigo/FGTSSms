@@ -1,6 +1,7 @@
 package fgtssms.andersonsilva.com.fgtssms;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -38,8 +39,12 @@ public class HelpActivity extends AppCompatActivity {
         String texto = "Esta aplicação Lê os SMS enviados pela Caixa Econômica Federal com as informações referentes ao Seu SMS. " +
                 "\nAs informações apresentadas neste aplicativo refletem as mensagens da sua caixa de entrada e organiza as informações.\n" +
                 "Qualquer divergência deve ser verificada diretamente com a Caixa Econômica Federal, sendo assim este Aplicativo não possui nenhuma responsabilidade com as informações apresentadas.\n" +
-                "Para solicitar a adesão ao serviço acesse a URL:http://www.caixa.gov.br/beneficios-trabalhador/fgts/FGTS-Alerta-SMS/Paginas/default.aspx?pk_campaign=adesaopf";
+                "Para solicitar a adesão ao serviço acesse a URL:";
         textView.setText(texto);
+        TextView textViewUrl = (TextView) findViewById(R.id.textURL);
+        String textoUrl = "http://www.caixa.gov.br/beneficios-trabalhador/fgts/FGTS-Alerta-SMS/Paginas/default.aspx?pk_campaign=adesaopf";
+        textViewUrl.setText(textoUrl);
+        textViewUrl.setTextColor(Color.GREEN);
     }
 
     @Override

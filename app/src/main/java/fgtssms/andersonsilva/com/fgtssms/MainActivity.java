@@ -109,11 +109,12 @@ public class MainActivity extends AppCompatActivity
 
     private boolean checkIfAlreadyhavePermission() {
         int resultSms     = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
-        int resultContact =  ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS);
-        int resultReceivedSms = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
+       // int resultContact =  ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS);
+     //   int resultReceivedSms = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
         if (resultSms == PackageManager.PERMISSION_GRANTED
-                && resultContact == PackageManager.PERMISSION_GRANTED
-                && resultReceivedSms == PackageManager.PERMISSION_GRANTED) {
+                //&& resultContact == PackageManager.PERMISSION_GRANTED
+               // && resultReceivedSms == PackageManager.PERMISSION_GRANTED
+        ) {
             return true;
         } else {
             return false;
@@ -132,9 +133,11 @@ public class MainActivity extends AppCompatActivity
 
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    ActivityCompat.requestPermissions(this,
+               /*     ActivityCompat.requestPermissions(this,
                             new String[]{ Manifest.permission.READ_CONTACTS},
-                            REQUEST_CODE_B);
+                            REQUEST_CODE_B);*/
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
 
 
                 } else {
@@ -202,8 +205,8 @@ public class MainActivity extends AppCompatActivity
         if (!checkIfAlreadyhavePermission()){
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_SMS)
-                    && ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_CONTACTS)
-                    && ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.RECEIVE_SMS)
+                   // && ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_CONTACTS)
+                 //   && ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.RECEIVE_SMS)
                     ) {
 
             } else {
