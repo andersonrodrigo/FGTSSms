@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_send){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.andersonsilva.quemteligou");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=fgtssms.andersonsilva.com.fgtssms");
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
             startActivity(sharingIntent);
         }else if (id == R.id.nav_sair){
