@@ -1,3 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3f6bef41f5296052f8e58425eb9f86f5f26c7c0c">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_bc3e5168e98a8ef15d9fa05c6233206a9438c252\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.2.1_b889c215f4817fb845424bf1cb8e473b5b031339\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.2.1_e6b18c7af3ef0618e3286668876d1972646a2884\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.2.1_e8e1a1877f4bdb7ac1bb7f86793b44ba107f63ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_e7a1d85d3c723c9988a665b08d2e64405455d5dc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_5f43fcad567eb823b3785a7362b7c5ce513625a6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.2.1_571d5fb26b7eaae198cd392e872ed1163b7549d1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.2.1_bfe2b0ce4063b059bb2660218bf5811a056a9297\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_063a6e6375e47ca993fef46ef8aafd10c6bd586f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c5af73ef456c7fa9d9da26a922c2c5f1a377f063">
+        <dex dex="C:\Users\ander\OneDrive\Documents\GitHub\FGTSsms\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_321d0c105200e95cdef1be3604b07961218f5999\classes.dex" />
+    </item>
+
+</items>
